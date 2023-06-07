@@ -1,0 +1,79 @@
+*{
+    box-sizing: border-box;  
+    margin: 0;
+    padding: 0;
+}
+
+.content{
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form{
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    border: 2px solid darkblue;
+    border-style: dotted;
+}
+
+.first-box, .second-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: .5rem;
+}
+
+.left-box, .right-box{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inp-info{
+    margin: .5rem;
+    padding: 0 8px;
+    height: 2rem;
+    width: 15rem;
+    outline: none;
+}
+
+.cuadricula{
+    height: 5rem;
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-cuadricula, .right-cuadricula{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-cuadricula input, .right-cuadricula input{
+    height: 1.5rem;
+    width: 3rem;
+    margin: .5rem;
+}
+
+.show-data{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table{
+    width: 80%;
+}
