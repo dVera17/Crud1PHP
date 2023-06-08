@@ -41,6 +41,7 @@
                             <input type="submit" value="Search">
                         </div>
                     </div>
+                    <input class="inp-info" type="number" name="cc" placeholder="Documento de identidad">
                 </div>
             </div>
         </form>
