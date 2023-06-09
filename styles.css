@@ -61,19 +61,16 @@
     align-items: center;
 }
 
-.left-cuadricula input, .right-cuadricula input{
+.left-cuadricula input, .right-cuadricula input, button{
     height: 1.5rem;
     width: 3rem;
     margin: .5rem;
 }
 
-.show-data{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+table{
+    width: 100vw;
 }
 
-.table{
-    width: 80%;
+td{
+    text-align: center;
 }

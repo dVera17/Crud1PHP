@@ -1,3 +1,59 @@
+<?php
+
+    if(isset($_POST['agregar'])) postData();
+
+    function postData(){
+        $data = [
+            'nombre' => $_POST['nombre'],
+            'apellido' => $_POST['apellido'],
+            'direccion' => $_POST['direccion'],
+            'edad' => intval($_POST['edad']),
+            'email' => $_POST['email'],
+            'horarioEntrada' => $_POST['horarioEntrada'],
+            'team' => $_POST['team'],
+            'trainer' => $_POST['trainer'],
+            'cc' => intval($_POST['cc'])
+        ];
+    
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => 'Content-Type: application/json',
+                'content' => json_encode($data)
+            ]
+        ];
+    
+        $config = stream_context_create($options);
+        $_DATA = file_get_contents('https://6480f4aaf061e6ec4d4a1e08.mockapi.io/user', false, $config);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    };
+
+    if(isset($_POST['delete'])) deleteUser();
+
+    function deleteUser(){
+        $options = [
+            'http' => [
+                'method' => 'DELETE',
+                'header' => 'Content-Type: application/json'
+            ]
+        ];
+
+        $users = getDataAll();
+        var_dump($users);
+        $id = null;
+        foreach($users as $user){
+            if($user == $_POST['cc']){
+                $id = $user['id'];
+            }
+        }
+        
+        $config = stream_context_create($options);
+        return json_decode(file_get_contents('https://6480f4aaf061e6ec4d4a1e08.mockapi.io/user/'.$id, false, $config), true);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,73 +83,71 @@
                 <div class="left-box">
                     <label for="horarioEntrada">Horario de entrada</label>
                     <input class="inp-info" type="time" name="horarioEntrada">
-                    <input class="inp-info" type="text" name="team" placeholder="Team">
+                    <input class="inp-info" type="text" name="team" placeholder="Team" maxlength="2">
                     <input class="inp-info" type="text" name="trainer" placeholder="Trainer">
                 </div>
                 <div class="right-box">
                     <div class="cuadricula">
                         <div class="left-cuadricula">
-                            <input type="submit" value="✓">
+                            <button type="submit" name="agregar">Add</button>
                             <input type="submit" value="Edit">
                         </div>
                         <div class="right-cuadricula">
-                            <input type="submit" value="X">
+                            <input type="submit" value="delete">
                             <input type="submit" value="Search">
                         </div>
                     </div>
-                    <input class="inp-info" type="number" name="cc" placeholder="Documento de identidad">
+                    <input class="inp-info" type="number" name="cc" placeholder="Documento de identidad" required>
                 </div>
             </div>
         </form>
 
-        <div class="show-data">
-            <table class="table">
-                <thead class="menu-busqueda">
-                    <tr>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">APELLIDOS</th>
-                        <th scope="col">DIRECCION</th>
-                        <th scope="col">EDAD</th>
-                        <th scope="col">EMAIL</th>
-                        <th scope="col">ENTRADA</th>
-                        <th scope="col">TEAM</th>
-                        <th scope="col">TRAINER</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">         
-                    <tr>
-                        <td>NOMBRE</td>
-                        <td>APELLIDOS</td>
-                        <td>DIRECCION</td>
-                        <td>EDAD</td>
-                        <td>EMAIL</td>
-                        <td>ENTRADA</td>
-                        <td>TEAM</td>
-                        <td>TRAINER</td>
-                    </tr>
-                    <tr>
-                        <td>NOMBRE</td>
-                        <td>APELLIDOS</td>
-                        <td>DIRECCION</td>
-                        <td>EDAD</td>
-                        <td>EMAIL</td>
-                        <td>ENTRADA</td>
-                        <td>TEAM</td>
-                        <td>TRAINER</td>
-                    </tr>
-                    <tr>
-                        <td>NOMBRE</td>
-                        <td>APELLIDOS</td>
-                        <td>DIRECCION</td>
-                        <td>EDAD</td>
-                        <td>EMAIL</td>
-                        <td>ENTRADA</td>
-                        <td>TEAM</td>
-                        <td>TRAINER</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table>
+            <tr>
+                <th>NOMBRES</th>
+                <th>APELLIDOS</th>
+                <th>DIRECCION</th>
+                <th>EDAD</th>
+                <th>EMAIL</th>
+                <th>ENTRADA</th>
+                <th>TEAM</th>
+                <th>TRAINER</th>
+                <th>GESTION</th>
+            </tr>
+
+            <?php
+                
+                function getDataAll(){
+                    $options = [
+                        'http' => [
+                            'method' => 'GET',
+                            'header' => 'Content-Type: application/json'
+                        ]
+                    ];
+                
+                    $config = stream_context_create($options);
+                    return json_decode(file_get_contents('https://6480f4aaf061e6ec4d4a1e08.mockapi.io/user', false, $config), true);
+                }; 
+
+                $users = getDataAll();
+                
+                foreach($users as $user){                    
+                    echo '
+                        <tr>
+                            <td>' .$user['nombre']. '</td>
+                            <td>' .$user['apellido']. '</td>
+                            <td>' .$user['direccion']. '</td>
+                            <td>' .$user['edad']. '</td>
+                            <td>' .$user['email']. '</td>
+                            <td>' .$user['horarioEntrada']. '</td>
+                            <td>' .$user['team']. '</td>
+                            <td>' .$user['trainer']. '</td>
+                            <td>PRUEBA</td>
+                        </tr>
+                    ';
+                };
+            ?>
+        </table>
     </div>
 </body>
 </html>
